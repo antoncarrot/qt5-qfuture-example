@@ -36,8 +36,8 @@ int MyApp::main() {
   data_manager = new DataManager(this);
   watcher = new QFutureWatcher<QList<Task>>(this);
 
-  //connect(&watcher, &QFutureWatcher::finished, this, &MyApp::printResult);
-  connect(watcher, SIGNAL(finished()), this, SLOT(printResult()));
+  connect(watcher, &QFutureWatcherBase::finished, this, &MyApp::printResult);
+  //connect(watcher, SIGNAL(finished()), this, SLOT(printResult()));
 
   future = QtConcurrent::run(data_manager, &DataManager::doTask);
   watcher->setFuture(future);
