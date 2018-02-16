@@ -40,8 +40,8 @@ int MyApp::main() {
   //connect(watcher, SIGNAL(finished()), this, SLOT(printResult()));
 
   //future = QtConcurrent::run(data_manager, &DataManager::doTask);
+  //watcher->setFuture(future);
   startFuture();
-  watcher->setFuture(future);
 
   qDebug() << QThread::currentThreadId() << "Finish main";
   QTimer::singleShot(1000, this, &MyApp::tick);
@@ -66,6 +66,7 @@ void MyApp::tick() {
 
 void MyApp::startFuture() {
   future = QtConcurrent::run(data_manager, &DataManager::doTask);
+  watcher->setFuture(future);
 }
 
 
