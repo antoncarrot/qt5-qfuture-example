@@ -41,6 +41,9 @@ public slots:
     void tick();
 
 private:
+    void startFuture();
+
+private:
     QFuture<QList<Task>> future;
     QFutureWatcher<QList<Task>>* watcher;
     DataManager* data_manager;

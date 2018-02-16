@@ -39,7 +39,8 @@ int MyApp::main() {
   connect(watcher, &QFutureWatcherBase::finished, this, &MyApp::printResult);
   //connect(watcher, SIGNAL(finished()), this, SLOT(printResult()));
 
-  future = QtConcurrent::run(data_manager, &DataManager::doTask);
+  //future = QtConcurrent::run(data_manager, &DataManager::doTask);
+  startFuture();
   watcher->setFuture(future);
 
   qDebug() << QThread::currentThreadId() << "Finish main";
@@ -53,11 +54,18 @@ void MyApp::printResult() {
   for(int i = 0; i < tasks_list.size(); ++i) {
     qDebug() << QThread::currentThreadId() << tasks_list.at(i).str;
   }
+
+  qDebug() << QThread::currentThreadId() << "Start future after 3 sec";
+  QTimer::singleShot(3000, this, &MyApp::startFuture);
 }
 
 void MyApp::tick() {
   qDebug() << QThread::currentThreadId() << "Event tick";
   QTimer::singleShot(1000, this, &MyApp::tick);
+}
+
+void MyApp::startFuture() {
+  future = QtConcurrent::run(data_manager, &DataManager::doTask);
 }
 
 
